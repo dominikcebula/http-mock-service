@@ -3,6 +3,7 @@ package main
 import (
 	"gopkg.in/yaml.v2"
 	"os"
+	"time"
 )
 
 type Config struct {
@@ -22,7 +23,8 @@ type RequestRule struct {
 }
 
 type ResponseRule struct {
-	Body string
+	Delay time.Duration
+	Body  string
 }
 
 func readConfig() (Config, error) {

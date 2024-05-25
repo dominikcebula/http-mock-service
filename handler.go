@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+	"time"
 )
 
 type RuleHandler struct {
@@ -29,6 +30,7 @@ func (s *RuleHandler) CanHandle(request *http.Request) bool {
 
 func (s *RuleHandler) Handle(response http.ResponseWriter, request *http.Request) {
 	requestPath := request.URL.Path
+	time.Sleep(s.rule.Response.Delay)
 	_, err := response.Write([]byte(s.rule.Response.Body))
 	if err != nil {
 		log.Fatalf("Error occured while writing response for request path %s: %v", requestPath, err)

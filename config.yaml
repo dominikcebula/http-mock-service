@@ -3,6 +3,11 @@ server:
 
 rules:
   - request:
-      path: "/hello"
+      path: ^/hello$
     response:
       body: "Hello from HTTP Mock Service"
+  - request:
+      path: ^/hello_with_delay$
+    response:
+      delay: 5s
+      body: "Hello from HTTP Mock Service with delay"
