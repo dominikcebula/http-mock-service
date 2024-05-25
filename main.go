@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func main() {
@@ -21,7 +22,7 @@ func main() {
 	httpService := HttpService{ruleHandlers}
 
 	httpServer := &http.Server{
-		Addr:    config.Server.Address,
+		Addr:    config.Server.Host + ":" + strconv.Itoa(config.Server.Port),
 		Handler: &httpService,
 	}
 	log.Printf("Listening for connections on address \"%s\"...\n", httpServer.Addr)

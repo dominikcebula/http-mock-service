@@ -8,7 +8,8 @@ import (
 
 type Config struct {
 	Server struct {
-		Address string
+		Host string
+		Port int
 	}
 	Rules []Rule
 }
