@@ -14,11 +14,17 @@ rules:
       delay: 5s
       body: "Hello from HTTP Mock Service with delay"
   - request:
-      path: ^/hello_with_response_headers$
+      path: ^/hello_json$
     response:
       code: 200
       headers:
-        "x-header-example1": "value1"
-        "x-header-example2": "value2"
-        "x-header-example3": "value3"
-      body: "Hello from HTTP Mock Service with response headers"
+        Content-Type: application/json
+        Cache-Control: no-cache
+        X-Powered-By: http-mock-servie
+      body: |
+        {
+            "product_id": "12345",
+            "name": "Wireless Bluetooth Headphones",
+            "brand": "TechSound",
+            "price": 79.99,
+        }
