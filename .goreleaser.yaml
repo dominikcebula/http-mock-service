@@ -27,6 +27,17 @@ archives:
       - goos: windows
         format: zip
 
+dockers:
+  - image_templates:
+      - "dominikcebula/http-mock-service:latest"
+      - "dominikcebula/http-mock-service:{{ .Tag }}"
+    extra_files:
+      - config.yaml
+      - go.mod
+      - go.sum
+      - docker/passwd.minimal
+      - docker/group.minimal
+
 changelog:
   sort: asc
   filters:
