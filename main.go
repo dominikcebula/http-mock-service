@@ -1,7 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"log"
+	"net/http"
+)
 
 func main() {
-	fmt.Println("Starting HTTP Mock Service...")
+	log.Println("Creating HTTP Mock Service...")
+
+	httpService := HttpService{}
+
+	httpServer := &http.Server{
+		Addr:    ":8080",
+		Handler: &httpService,
+	}
+
+	log.Println("Listening for connections...")
+	log.Fatal(httpServer.ListenAndServe())
 }
