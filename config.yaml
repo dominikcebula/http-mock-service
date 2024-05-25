@@ -1,2 +1,8 @@
 server:
   address: ":8080"
+
+rules:
+  - request:
+      path: /hello
+    response:
+      body: "Hello from HTTP Mock Service"

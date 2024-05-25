@@ -6,6 +6,7 @@ import (
 )
 
 type HttpService struct {
+	ruleHandlers []RuleHandler
 }
 
 func (s *HttpService) ServeHTTP(response http.ResponseWriter, request *http.Request) {

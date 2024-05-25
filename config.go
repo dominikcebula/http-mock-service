@@ -9,6 +9,20 @@ type Config struct {
 	Server struct {
 		Address string
 	}
+	Rules []Rule
+}
+
+type Rule struct {
+	Request  RequestRule
+	Response ResponseRule
+}
+
+type RequestRule struct {
+	Path string
+}
+
+type ResponseRule struct {
+	Body string
 }
 
 func readConfig() (Config, error) {
