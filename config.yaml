@@ -29,3 +29,18 @@ rules:
             "brand": "TechSound",
             "price": 79.99,
         }
+  - request:
+      path: ^/hello_xml$
+    response:
+      code: 200
+      headers:
+        Content-Type: application/xml
+        Cache-Control: no-cache
+        X-Powered-By: http-mock-servie
+      body: |
+        <product>
+          <product_id>12345</product_id>
+          <name>Wireless Bluetooth Headphones</name>
+          <brand>TechSound</brand>
+          <price>79.99</price>
+        </product
