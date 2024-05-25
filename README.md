@@ -45,7 +45,7 @@ You can use this project to easily create mocks for REST JSON APIs, REST XML API
 Run the following command to execute HTTP Mock Service using Docker:
 
 ```shell
-docker run --rm -p 8080:8080 dominikcebula/http-mock-service:v0.4.3
+docker run --rm -p 8080:8080 dominikcebula/http-mock-service:v0.4.4
 ```
 
 After running above command you will see on the screen:
@@ -80,7 +80,7 @@ Which will return following results:
 
 You can declare your own behaviors using your own `config.yaml` file.
 
-For example, below `config.yaml` file will generate new json response available under `/hello_order` endpoint:
+For example, below `my_config.yaml` file will generate new json response available under `/hello_order` endpoint:
 
 ```yaml
 server:
@@ -111,11 +111,12 @@ rules:
         }
 ```
 
-Having new `config.yaml` file created, HTTP Mock Service needs to be executed with the new `config.yaml` file using the
+Having new `my_config.yaml` file created, HTTP Mock Service needs to be executed with the new `my_config.yaml` file
+using the
 following command:
 
 ```shell
-docker run --mount type=bind,source=./my_config.yaml,target=/app/config.yaml --rm -p 8080:8080 dominikcebula/http-mock-service:v0.4.3
+docker run --mount type=bind,source=./my_config.yaml,target=/app/config.yaml --rm -p 8080:8080 dominikcebula/http-mock-service:v0.4.4
 ```
 
 Introduced API endpoint can be queried using curl:
