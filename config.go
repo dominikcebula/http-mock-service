@@ -23,10 +23,13 @@ type RequestRule struct {
 }
 
 type ResponseRule struct {
-	Code  int
-	Delay time.Duration
-	Body  string
+	Code    int
+	Delay   time.Duration
+	Headers Headers
+	Body    string
 }
+
+type Headers map[string]string
 
 func readConfig() (Config, error) {
 	configFileContent, err := os.ReadFile("config.yaml")

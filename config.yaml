@@ -13,3 +13,12 @@ rules:
       code: 200
       delay: 5s
       body: "Hello from HTTP Mock Service with delay"
+  - request:
+      path: ^/hello_with_response_headers$
+    response:
+      code: 200
+      headers:
+        "x-header-example1": "value1"
+        "x-header-example2": "value2"
+        "x-header-example3": "value3"
+      body: "Hello from HTTP Mock Service with response headers"

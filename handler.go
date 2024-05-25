@@ -29,25 +29,32 @@ func (s *RuleHandler) CanHandle(request *http.Request) bool {
 }
 
 func (s *RuleHandler) Handle(response http.ResponseWriter, request *http.Request) {
-	handleDelay(s)
-	handleResponseCode(response, s)
-	err := handleResponseBody(response, s)
+	s.handleDelay()
+	s.handleResponseHeaders(response)
+	s.handleResponseCode(response)
+	err := s.handleResponseBody(response)
 	if err != nil {
 		log.Fatalf("Error occured while writing response for request path %s: %v", request.URL.Path, err)
 	}
 }
 
-func handleDelay(s *RuleHandler) {
+func (s *RuleHandler) handleDelay() {
 	time.Sleep(s.rule.Response.Delay)
 }
 
-func handleResponseCode(response http.ResponseWriter, s *RuleHandler) {
+func (s *RuleHandler) handleResponseHeaders(response http.ResponseWriter) {
+	for headerName, headerValue := range s.rule.Response.Headers {
+		response.Header().Add(headerName, headerValue)
+	}
+}
+
+func (s *RuleHandler) handleResponseCode(response http.ResponseWriter) {
 	if s.rule.Response.Code > 0 {
 		response.WriteHeader(s.rule.Response.Code)
 	}
 }
 
-func handleResponseBody(response http.ResponseWriter, s *RuleHandler) error {
+func (s *RuleHandler) handleResponseBody(response http.ResponseWriter) error {
 	_, err := response.Write([]byte(s.rule.Response.Body))
 	return err
 }
