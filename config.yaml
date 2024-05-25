@@ -5,9 +5,11 @@ rules:
   - request:
       path: ^/hello$
     response:
+      code: 200
       body: "Hello from HTTP Mock Service"
   - request:
       path: ^/hello_with_delay$
     response:
+      code: 200
       delay: 5s
       body: "Hello from HTTP Mock Service with delay"

@@ -23,6 +23,7 @@ type RequestRule struct {
 }
 
 type ResponseRule struct {
+	Code  int
 	Delay time.Duration
 	Body  string
 }
