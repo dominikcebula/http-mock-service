@@ -10,12 +10,24 @@ type HttpService struct {
 }
 
 func (s *HttpService) ServeHTTP(response http.ResponseWriter, request *http.Request) {
-	log.Println("Handling http request...")
+	log.Printf("Handling http request \"%s\"...", request.URL.Path)
 
-	_, err := response.Write([]byte("test\n"))
-	if err != nil {
-		log.Fatal(err)
+	ruleHandler := s.findHandler(request)
+	if ruleHandler != nil {
+		ruleHandler.Handle(response, request)
+	} else {
+		log.Printf("No rule handler found for request \"%s\"...", request.URL.Path)
 	}
 
 	log.Println("HTTP Request handled.")
+}
+
+func (s *HttpService) findHandler(request *http.Request) *RuleHandler {
+	for _, handler := range s.ruleHandlers {
+		if handler.CanHandle(request) {
+			return &handler
+		}
+	}
+
+	return nil
 }

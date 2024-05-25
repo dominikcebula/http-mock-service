@@ -3,6 +3,6 @@ server:
 
 rules:
   - request:
-      path: /hello
+      path: "/hello"
     response:
       body: "Hello from HTTP Mock Service"
