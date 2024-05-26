@@ -22,7 +22,7 @@ func (s *RuleHandler) CanHandle(request *http.Request) bool {
 	requestPath := request.URL.Path
 	matched, err := regexp.MatchString(s.rule.Request.Path, requestPath)
 	if err != nil {
-		log.Fatalf("Error occured during matching request path %s: %v", requestPath, err)
+		log.Panicf("Error occured during matching request path %s: %v\n", requestPath, err)
 		return false
 	}
 	return matched
@@ -34,7 +34,7 @@ func (s *RuleHandler) Handle(response http.ResponseWriter, request *http.Request
 	s.handleResponseCode(response)
 	err := s.handleResponseBody(response)
 	if err != nil {
-		log.Fatalf("Error occured while writing response for request path %s: %v", request.URL.Path, err)
+		log.Panicf("Error occured while writing response for request path %s: %v", request.URL.Path, err)
 	}
 }
 
