@@ -24,6 +24,21 @@ func TestSimpleHelloCase(t *testing.T) {
 	assert.Equal(t, "Hello from HTTP Mock Service", string(body))
 }
 
+func TestSimpleHelloCaseHttpMethodGetOnly(t *testing.T) {
+	response, err := http.Get(serverBase + "/hello_get_only")
+	if err != nil {
+		t.Error(err)
+	}
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		t.Error(err)
+	}
+
+	assert.Equal(t, 200, response.StatusCode)
+	assert.Equal(t, "Hello GET only from HTTP Mock Service", string(body))
+}
+
 func TestHelloJson(t *testing.T) {
 	response, err := http.Get(serverBase + "/hello_json")
 	if err != nil {
@@ -134,6 +149,26 @@ func TestResponseToAnyHttpMethodIfHttpMethodNotDefined(t *testing.T) {
     "price": 79.99,
 }
 `, string(body))
+}
+
+func TestDoesNotRespondToDifferentHttpMethodThenDefined(t *testing.T) {
+	request, err := http.NewRequest("DELETE", serverBase+"/hello_get_only", nil)
+	if err != nil {
+		t.Error(err)
+	}
+
+	response, err := http.DefaultClient.Do(request)
+	if err != nil {
+		t.Error(err)
+	}
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		t.Error(err)
+	}
+
+	assert.Equal(t, 501, response.StatusCode)
+	assert.Equal(t, "No handler found for request.", string(body))
 }
 
 func setup() {

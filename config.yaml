@@ -9,6 +9,12 @@ rules:
       code: 200
       body: "Hello from HTTP Mock Service"
   - request:
+      path: ^/hello_get_only$
+      method: GET
+    response:
+      code: 200
+      body: "Hello GET only from HTTP Mock Service"
+  - request:
       path: ^/hello_with_delay$
     response:
       code: 200
