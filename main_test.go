@@ -95,6 +95,47 @@ func TestHelloOptions(t *testing.T) {
 	assert.Empty(t, string(body))
 }
 
+func TestNonExistingEndpoint(t *testing.T) {
+	response, err := http.Get(serverBase + "/hello_non_existing_endpoint")
+	if err != nil {
+		t.Error(err)
+	}
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		t.Error(err)
+	}
+
+	assert.Equal(t, 501, response.StatusCode)
+	assert.Equal(t, "No handler found for request.", string(body))
+}
+
+func TestResponseToAnyHttpMethodIfHttpMethodNotDefined(t *testing.T) {
+	request, err := http.NewRequest("DELETE", serverBase+"/hello_json", nil)
+	if err != nil {
+		t.Error(err)
+	}
+
+	response, err := http.DefaultClient.Do(request)
+	if err != nil {
+		t.Error(err)
+	}
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		t.Error(err)
+	}
+
+	assert.Equal(t, 200, response.StatusCode)
+	assert.Equal(t, `{
+    "product_id": "12345",
+    "name": "Wireless Bluetooth Headphones",
+    "brand": "TechSound",
+    "price": 79.99,
+}
+`, string(body))
+}
+
 func setup() {
 	createServer()
 	go startServer()
