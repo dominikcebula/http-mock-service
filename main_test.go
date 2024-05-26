@@ -88,7 +88,7 @@ func TestHelloXml(t *testing.T) {
 }
 
 func TestHelloOptions(t *testing.T) {
-	request, err := http.NewRequest("OPTIONS", serverBase+"/hello_options", nil)
+	request, err := http.NewRequest("OpTiOnS", serverBase+"/hello_options", nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -169,6 +169,29 @@ func TestDoesNotRespondToDifferentHttpMethodThenDefined(t *testing.T) {
 
 	assert.Equal(t, 501, response.StatusCode)
 	assert.Equal(t, "No handler found for request.", string(body))
+}
+
+func TestHandlesDifferentLetterCaseInHttpMethod(t *testing.T) {
+	request, err := http.NewRequest("OpTiOnS", serverBase+"/hello_options", nil)
+	if err != nil {
+		t.Error(err)
+	}
+
+	response, err := http.DefaultClient.Do(request)
+	if err != nil {
+		t.Error(err)
+	}
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		t.Error(err)
+	}
+
+	assert.Equal(t, 204, response.StatusCode)
+	assert.Equal(t, response.Header.Get("Allow"), "OPTIONS, GET, HEAD, POST")
+	assert.Equal(t, response.Header.Get("Cache-Control"), "no-cache")
+	assert.Equal(t, response.Header.Get("X-Powered-By"), "http-mock-service")
+	assert.Empty(t, string(body))
 }
 
 func setup() {
