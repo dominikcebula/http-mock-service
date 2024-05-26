@@ -28,7 +28,8 @@ You can use this project to easily create mocks for REST JSON APIs, REST XML API
 ## Features
 
 * Request matching based on:
-  * Path using regexp
+  * Request Path using regexp
+  * HTTP Method (GET, POST, PUT, DELETE, ...)
 * Response generation, including:
   * Response code
   * Response headers
