@@ -16,7 +16,7 @@ func (s *HttpService) ServeHTTP(response http.ResponseWriter, request *http.Requ
 	if ruleHandler != nil {
 		ruleHandler.Handle(response, request)
 	} else {
-		log.Printf("No rule handler found for request \"%s\"...", request.URL.Path)
+		s.noHandlerFoundResponse(response, request)
 	}
 
 	log.Println("HTTP Request handled.")
@@ -30,4 +30,13 @@ func (s *HttpService) findHandler(request *http.Request) *RuleHandler {
 	}
 
 	return nil
+}
+
+func (s *HttpService) noHandlerFoundResponse(response http.ResponseWriter, request *http.Request) {
+	log.Printf("No rule handler found for request \"%s\"...", request.URL.Path)
+	response.WriteHeader(501)
+	_, err := response.Write([]byte("No handler found for request."))
+	if err != nil {
+		log.Panicf("Error writing response: %v", err)
+	}
 }

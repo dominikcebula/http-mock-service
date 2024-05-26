@@ -44,3 +44,12 @@ rules:
           <brand>TechSound</brand>
           <price>79.99</price>
         </product
+  - request:
+      path: ^/hello_options$
+      method: OPTIONS
+    response:
+      code: 204
+      headers:
+        Allow: OPTIONS, GET, HEAD, POST
+        Cache-Control: no-cache
+        X-Powered-By: http-mock-service

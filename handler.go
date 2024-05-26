@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+	"strings"
 	"time"
 )
 
@@ -19,6 +20,10 @@ func NewRuleHandlers(config Config) (ruleHandlers []RuleHandler) {
 }
 
 func (s *RuleHandler) CanHandle(request *http.Request) bool {
+	return s.CanHandleRequestPath(request) && s.CanHandleHttpMethod(request)
+}
+
+func (s *RuleHandler) CanHandleRequestPath(request *http.Request) bool {
 	requestPath := request.URL.Path
 	matched, err := regexp.MatchString(s.rule.Request.Path, requestPath)
 	if err != nil {
@@ -26,6 +31,14 @@ func (s *RuleHandler) CanHandle(request *http.Request) bool {
 		return false
 	}
 	return matched
+}
+
+func (s *RuleHandler) CanHandleHttpMethod(request *http.Request) bool {
+	if len(s.rule.Request.Method) == 0 {
+		return true
+	}
+
+	return strings.EqualFold(strings.TrimSpace(request.Method), strings.TrimSpace(s.rule.Request.Method))
 }
 
 func (s *RuleHandler) Handle(response http.ResponseWriter, request *http.Request) {

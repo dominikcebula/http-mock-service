@@ -20,7 +20,8 @@ type Rule struct {
 }
 
 type RequestRule struct {
-	Path string
+	Path   string
+	Method string
 }
 
 type ResponseRule struct {
