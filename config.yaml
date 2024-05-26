@@ -43,7 +43,7 @@ rules:
           <name>Wireless Bluetooth Headphones</name>
           <brand>TechSound</brand>
           <price>79.99</price>
-        </product
+        </product>
   - request:
       path: ^/hello_options$
       method: OPTIONS
